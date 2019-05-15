@@ -3,6 +3,7 @@ FROM nvidia/cuda:9.0-cudnn7-devel-ubuntu16.04
 # INSERT MAINTAINER BELOW!
 #LABEL maintainer ""
 COPY ./requirements.txt /tmp/requirements.txt
+COPY ./requirements_additional.txt /tmp/requirements_additional.txt
 
 # #############################
 # ### Install Python
@@ -13,8 +14,9 @@ RUN yes | pip3 install --upgrade pip
 #############################
 ### Create ML Environment
 #############################
-RUN yes | pip3 install -r /tmp/requirements.txt && pip3 install -q GDAL==1.10.0 --global-option=build_ext --global-option="-I/usr/include/gdal"
-
+RUN yes | pip3 install --upgrade setuptools && pip3 install -r /tmp/requirements.txt \
+&& pip3 install -q GDAL==1.10.0 --global-option=build_ext --global-option="-I/usr/include/gdal" \
+&& pip3 install -r /tmp/requirements_additional.txt
 
 # Alias python3 and pip3. Mind that this works only in interactive shells, i.e. you won't be able to call python3 with python within this Dockerfile.
 RUN echo "alias pip=pip3" >> ~/.bash_aliases && echo "alias python=python3" >> ~/.bash_aliases
