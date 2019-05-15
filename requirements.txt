@@ -12,5 +12,7 @@ psycopg2==2.7.6.1
 python-dotenv>=0.10.1
 celery
 pytz
+GPy==1.9.6
+paramz==0.9.4
 gpyopt==1.2.5
 
